@@ -1,26 +1,22 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
-// Bottom Up
+// Top Down
 // O(KN) Square Complexity
-int CountWaysTD(int n, int k,int *dp){
-    int ans=0;
-    if(n ==0){
-        return 1;
-    }
-    if(n <0){
-        return 0;
-    }
+int CountWaysBU(int n, int k){
+   vector<int> dp(n+1,0);
+    dp[0] =1;
+   for(int i =1; i <=n; i++){
+        for(int jump =1; jump<=k; jump++){
+            if(i - jump >=0){
+                dp[i] += dp[i-jump];
+            }
+        }
+   }
 
-    if(dp[n] != 0){
-        return dp[n];
-    }
+   return dp[n];
 
-    for(int jump=1; jump <= k; jump++){
-        ans += CountWaysTD(n-jump,k,dp);
-    }
-
-    return ans;
+      
 }
 
 int main(){
@@ -28,7 +24,7 @@ int main(){
     cin>>n>>k;
     int dp[1000]={0};
 
-    cout<<"Number of Ways are: "<<CountWaysTD(n,k,dp)<<endl;
+    cout<<"Number of Ways are: "<<CountWaysBU(n,k)<<endl;
 
     return 0;
 }
